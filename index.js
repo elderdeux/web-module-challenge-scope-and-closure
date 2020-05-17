@@ -27,10 +27,13 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ *  Inside Scope and Outside scope
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * Counter 1 code due to the const being outside the function scope.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * counter1 would be preferable in nesting code of javascript, counter 2 would be preferable in straight forward as you see it code.
  *
 */
 
@@ -56,11 +59,10 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inningScore(){
+  return(Math.floor(Math.random()*3));
 }
+inningScore()
 
 /* Task 3: finalScore()
 
@@ -76,11 +78,19 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+// function finalScore(inningScore, numberInnings){
+//   let score = {"Home": 0, "Away": 0}; 
+//   let i = 0;
+//   while (i < numberInnings){
+//     score["Home"] += inningScore();
+//     score["Away"] += inningScore();
+// i++
+// }
+// return score;
+// }
+// console.log(finalScore(inningScore, 9));
 
-  /*Code Here*/
 
-}
 
 /* Task 4: 
 
@@ -103,8 +113,40 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+const toOrdinalSuffix = num => {
+  const int = parseInt(num),
+    digits = [int % 10, int % 100],
+    ordinals = ['st', 'nd', 'rd', 'th'],
+    oPattern = [1, 2, 3, 4],
+    tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+  return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
+    ? int + ordinals[digits[0] - 1]
+    : int + ordinals[3];
+
 }
+
+
+teams = ["WAS", "PHI", "HOU", "KC", "CHC", "NYY", "NYM", "BOS", "LAA", "LAD", "ARI", "ATL", "BAL", "CWS", "CIN", "CLE", "COL", "DET", "MIA", "MIL", "MIN", "SEA", "SFG", "STL", "TB", "TEX", "TOR", "OAK", "PIT", "SD"
+]
+
+
+
+function scoreboard() {
+  let homeScore = 0;
+  let awayScore = 0;
+  let homeTeam = teams[Math.floor(Math.random() * 30)];
+  let awayTeam = teams[Math.floor(Math.random() * 30)];
+  for (let i=0; i<9; i++){
+   homeScore = homeScore + inningScore();
+   awayScore = awayScore + inningScore();
+   console.log(`${toOrdinalSuffix((i + 1).toString())} Inning - ${homeTeam}: ${homeScore} ${awayTeam} ${awayScore}`);
+  }
+
+ console.log(`Final Score - ${homeTeam} ${homeScore} ${awayTeam} ${awayScore}`)
+
+
+}
+
+scoreboard();
 
 
